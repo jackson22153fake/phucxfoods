@@ -1,0 +1,66 @@
+services:
+  - type: database
+    name: mysql
+    env: docker
+    plan: free
+    image: jackson22153/phucxmysql:3.0.0
+    ports:
+      - internalPort: 3306
+        externalPort: 3305
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        value: 10122003simp!simp
+
+  - type: web
+    name: phucxfoodshop
+    env: docker
+    plan: free
+    image: jackson22153/phucxfoodshop:1.0.0
+    ports:
+      - internalPort: 8081
+        externalPort: 8081
+    envVars:
+      - key: WAIT_FOR_DATABASE
+        value: true
+      - key: PHUCXFOODSHOP_DEV_URL
+        value: http://localhost:8081
+      - key: REDIRECT_PAYMENT_URL
+        value: http://localhost:8081/payment
+      - key: PAYMENT_SUCCESSFUL_URL
+        value: http://localhost:5173/order?status=successful
+      - key: PAYMENT_CANCELED_URL
+        value: http://localhost:5173/order?status=canceled
+      - key: UI_URL
+        value: http://localhost:5173
+      - key: MYSQL_USERNAME
+        value: root
+      - key: MYSQL_PASSWORD
+        value: 10122003simp!simp
+      - key: MYSQL_URL
+        value: jdbc:mysql://mysql:3306/phucxfoodshop
+      - key: TWILIO_CLIENT_ID
+        value: {TWILIO_CLIENT_ID}
+      - key: TWILIO_CLIENT_SECRET
+        value: {TWILIO_CLIENT_SECRET}
+      - key: TWILIO_SERVICE_SID
+        value: {TWILIO_SERVICE_SID}
+      - key: PAYPAL_CLIENT_ID
+        value: {PAYPAL_CLIENT_ID}
+      - key: PAYPAL_CLIENT_SECRET
+        value: {PAYPAL_CLIENT_SECRET}
+      - key: PRODUCT_IMAGE_LOCATION
+        value: /usr/src/app/image/product
+      - key: CATEGORY_IMAGE_LOCATION
+        value: /usr/src/app/image/category
+      - key: CUSTOMER_IMAGE_LOCATION
+        value: /usr/src/app/image/customer
+      - key: EMPLOYEE_IMAGE_LOCATION
+        value: /usr/src/app/image/employee
+      - key: MAIL_USERNAME
+        value: {MAIL_USERNAME}
+      - key: MAIL_PASSWORD
+        value: {MAIL_PASSWORD}
+      - key: SHIP_SHOP_ID
+        value: {SHIP_SHOP_ID}
+      - key: SHIP_TOKEN
+        value: f{SHIP_TOKEN}
